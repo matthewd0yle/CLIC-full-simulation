@@ -25,14 +25,53 @@ ddsim \
 --outputFile mySimOutputFile.slcio --numberOfEvents 100
 ```
 
-Where **steeringFile** corresponds to the file that produces the initial particles, **compactFile** describes the geometry and design of the detector and the other arguments are reasonably self explanatory. The compact files come in the format **CLIC_o\<option\>_v\<version\>**.
+Where **steeringFile** corresponds to the file that produces the initial particles, **compactFile** describes the geometry and design of the detector and the other arguments are reasonably self explanatory. The compact files come in the format **CLIC\_o**_(option)_**\_v**_(version)_. The resultant .slcio file can then be reconstructed.
 
 
+
+## Reconstruction
+Reconstruction is done via Marlin and a corresponding XML steering file. Marlin steering files follow the general structure:
+
+```XML
+...
+  <execute>
+    <processor name="MyProcessor1"/>
+    <processor name="MyProcessor2"/>
+    </execute>
+
+  <global>
+    <parameter name="MyParameter1" value="1" />
+    <parameter name="MyParameter2" value="2" />
+  </global>
   
+  <processor name="MyProcessor1" type="MyProcessorType1">
+    <parameter name="MyProcessor1ParameterX" type="float" value="0.5"/>
+  </processor>
   
-  
+  <processor name="MyProcessor2" type="MyProcessorType2">
+    <parameter name="MyProcessor2ParameterY" type="bool" value="false"/>
+  </processor>
 
+...
+```
+The file can then be executed using the Marlin command as follows:
+```
+Marlin myEditedClicReconstruction.xml
+```
+Values within the steering file can overridden from the terminal by adding the argument in the format **--**_(processor)_**.**_(parameter)_.
+For example:
 
+```
+Marlin \
+--InitDD4hep.DD4hepXMLFile="$lcgeo_DIR/CLIC/compact/CLIC_o3_v14/CLIC_o3_v14.xml"  \
+--global.LCIOInputFiles="mySimOutputFile.slcio"\
+myEditedClicReconstruction.xml
+```
+
+This process will produce a .root file, which can then be analysed.
+
+## Analysis
+#### **TO DO**
 
 
 
