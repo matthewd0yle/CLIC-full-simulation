@@ -9,7 +9,7 @@ job = clicCondorTop
 #
 universe = vanilla
 executable = condorTopRunsScript
-log = $(job)_$(Cluster).log
+log = log
  
 # Specify which container to use
 +SingularityImage = "/cvmfs/singularity.opensciencegrid.org/kreczko/workernode:centos6"
@@ -26,8 +26,8 @@ log = $(job)_$(Cluster).log
 should_transfer_files = YES
 when_to_transfer_output = ON_EXIT
 initialdir = TopRuns/run$(Process)
-output = $(job)_$(Cluster)_$(Process).out
-error = $(job)_$(Cluster)_$(Process).err
+output = output
+error = error
 #input = clic_steer.py
 transfer_input_files = ../../clic_steer.py, ../../myEditedClicReconstruction.xml, ../../PandoraSettings, ../../BeamCal_BackgroundPars_3TeV.root, ../../BeamCal_BackgroundPars_380GeV.root, ../../whizard.001.stdhep
  
