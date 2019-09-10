@@ -29,7 +29,7 @@ initialdir = TopRuns/run$(Process)
 output = output
 error = error
 #input = clic_steer.py
-transfer_input_files = ../../clic_steer.py, ../../myEditedClicReconstruction.xml, ../../PandoraSettings, ../../BeamCal_BackgroundPars_3TeV.root, ../../BeamCal_BackgroundPars_380GeV.root, ../../whizard.001.stdhep
+transfer_input_files = ../../clic_steer.py, ../../myEditedClicReconstruction.xml, ../../PandoraSettings, ../../BeamCal_BackgroundPars_3TeV.root, ../../BeamCal_BackgroundPars_380GeV.root, ../../whizard.001.stdhep, ../../CLIC_o3_vCustom
  
 #
 # Tell HTCondor how many cpus and how much memory and storage we need
