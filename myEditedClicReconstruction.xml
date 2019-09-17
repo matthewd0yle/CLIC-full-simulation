@@ -97,7 +97,7 @@
     <processor name="MyClicEfficiencyCalculator"/>
     <processor name="MyRecoMCTruthLinker"/>
     <processor name="MyTrackChecker"/>
-    <processor name="MyHitResiduals"/> <!-- please uncomment the use of this processor only if needed -->
+    <Xprocessor name="MyHitResiduals"/> <!-- please uncomment the use of this processor only if needed -->
 
     <!-- === PFO Selector === -->
     <group name="PfoSelector" />
@@ -130,7 +130,7 @@
 
   <global>
     <parameter name="LCIOInputFiles">
-      mu-_10GeV_50Events_output.slcio
+      /eos/experiment/clicdp/grid/ilc/user/w/webermat/ddsimstdhep/ILC17-11-09_gcc62_CLIC_o3_v13/Zuds3000_split100/ddsim_ILC171109_gcc62_Zuds3000_CLIC_o3_v13_00_0.slcio
     </parameter>
     <!-- Limit the number of processed records (run+evt): -->
     <parameter name="MaxRecordNumber" value="-1" />
@@ -441,12 +441,18 @@
     <!--Maximum number of track hits to try the inverted fit-->
     <parameter name="MaxHitInvertedFit" type="int">0 </parameter>
     <!--Final minimum number of track clusters-->
-    <parameter name="MinClustersOnTrackAfterFit" type="int">4 </parameter>
+    <parameter name="MinClustersOnTrackAfterFit" type="int">3 </parameter>
 
     <!--enable debug plots -->
     <parameter name="DebugPlots" type="bool"> false </parameter>
+    <!--Purity value used for checking if tracks are real or not-->
+    <parameter name="trackPurity" type="double">0.7 </parameter>
+    <!--Print out time profile - for some, verbosity must be enable-->
+    <parameter name="DebugTiming" type="bool">false </parameter>
     <!--retry with tightened parameters, when too many tracks are being created-->
     <parameter name="RetryTooManyTracks" type="bool">false </parameter>
+    <!--Number of tracks that is considered too many-->
+    <parameter name="TooManyTracks" type="int">5e5 </parameter>
     <!--sort results from kdtree search-->
     <parameter name="SortTreeResults" type="bool">true </parameter>
 
@@ -454,37 +460,37 @@
     <parameter name="Steps" type="StringVec"> 
       [VXDBarrel]
       @Collections : VXDTrackerHits
-      @Parameters : MaxCellAngle : 0.005; MaxCellAngleRZ : 0.005; Chi2Cut : 100; MinClustersOnTrack : 4; MaxDistance : 0.02; HighPTCut: 10.0;
+      @Parameters : MaxCellAngle : 0.005; MaxCellAngleRZ : 0.005; Chi2Cut : 100; MinClustersOnTrack : 4; MaxDistance : 0.02; SlopeZRange: 10.0; HighPTCut: 10.0;
       @Flags : HighPTFit, VertexToTracker
       @Functions : CombineCollections, BuildNewTracks
       [VXDEncap]
       @Collections : VXDEndcapTrackerHits
-      @Parameters : MaxCellAngle : 0.005; MaxCellAngleRZ : 0.005; Chi2Cut : 100; MinClustersOnTrack : 4; MaxDistance : 0.02; HighPTCut: 10.0;
+      @Parameters : MaxCellAngle : 0.005; MaxCellAngleRZ : 0.005; Chi2Cut : 100; MinClustersOnTrack : 4; MaxDistance : 0.02; SlopeZRange: 10.0; HighPTCut: 10.0;
       @Flags : HighPTFit, VertexToTracker
       @Functions : CombineCollections, ExtendTracks
       [LowerCellAngle1]
       @Collections : VXDTrackerHits, VXDEndcapTrackerHits
-      @Parameters : MaxCellAngle : 0.025; MaxCellAngleRZ : 0.025; Chi2Cut : 100; MinClustersOnTrack : 4; MaxDistance : 0.02; HighPTCut: 10.0;
+      @Parameters : MaxCellAngle : 0.025; MaxCellAngleRZ : 0.025; Chi2Cut : 100; MinClustersOnTrack : 4; MaxDistance : 0.02; SlopeZRange: 10.0; HighPTCut: 10.0;
       @Flags : HighPTFit, VertexToTracker, RadialSearch
       @Functions : CombineCollections, BuildNewTracks
       [LowerCellAngle2]
       @Collections :
-      @Parameters : MaxCellAngle : 0.05; MaxCellAngleRZ : 0.05; Chi2Cut : 2000; MinClustersOnTrack : 4; MaxDistance : 0.02; HighPTCut: 10.0;
+      @Parameters : MaxCellAngle : 0.05; MaxCellAngleRZ : 0.05; Chi2Cut : 2000; MinClustersOnTrack : 4; MaxDistance : 0.02; SlopeZRange: 10.0; HighPTCut: 10.0;
       @Flags : HighPTFit, VertexToTracker, RadialSearch
       @Functions : BuildNewTracks, SortTracks
       [Tracker]
       @Collections : ITrackerHits, OTrackerHits, ITrackerEndcapHits, OTrackerEndcapHits
-      @Parameters : MaxCellAngle : 0.05; MaxCellAngleRZ : 0.05; Chi2Cut : 2000; MinClustersOnTrack : 4; MaxDistance : 0.02; HighPTCut: 1.0;
+      @Parameters : MaxCellAngle : 0.05; MaxCellAngleRZ : 0.05; Chi2Cut : 2000; MinClustersOnTrack : 4; MaxDistance : 0.02; SlopeZRange: 10.0; HighPTCut: 1.0;
       @Flags : HighPTFit, VertexToTracker, RadialSearch
       @Functions : CombineCollections, ExtendTracks
       [Displaced]
       @Collections : VXDTrackerHits, VXDEndcapTrackerHits, ITrackerHits, OTrackerHits, ITrackerEndcapHits, OTrackerEndcapHits
-      @Parameters : MaxCellAngle : 0.05; MaxCellAngleRZ : 0.05; Chi2Cut : 1000; MinClustersOnTrack : 5; MaxDistance : 0.015; HighPTCut: 10.0;
+      @Parameters : MaxCellAngle : 0.05; MaxCellAngleRZ : 0.05; Chi2Cut : 1000; MinClustersOnTrack : 5; MaxDistance : 0.015; SlopeZRange: 10.0; HighPTCut: 10.0;
       @Flags : OnlyZSchi2cut, RadialSearch
       @Functions : CombineCollections, BuildNewTracks
     </parameter>
 
-    <parameter name="trackPurity" type="double">0.7 </parameter>
+    <!--Angular range for initial cell seeding-->
     <parameter name="ThetaRange" type="double"> 0.05 </parameter>
  
     <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
@@ -534,7 +540,7 @@
     <!--if true extrapolation in the forward direction (in-out), otherwise backward (out-in)-->
     <parameter name="extrapolateForward" type="bool"> true </parameter>
     <!--Final minimum number of track clusters-->
-    <parameter name="MinClustersOnTrackAfterFit" type="int">4 </parameter>
+    <parameter name="MinClustersOnTrackAfterFit" type="int">3 </parameter>
   </processor>
 
 
@@ -559,7 +565,7 @@
     <!--Name of the output collection of the not reconstructed charged MCParticle-->
     <parameter name="MCParticleNotReco" type="string" lcioOutType="MCParticle">MCParticleNotReco </parameter>
     <!--If true additional plots (n of hits per subdetector per mc particle, mc theta, mc pt, info if the particle is decayed in the tracker) will be added to the Ntuple mctree-->
-    <parameter name="morePlots" type="bool">true </parameter>
+    <parameter name="morePlots" type="bool">false </parameter>
     <!--Set of cuts to define 'reconstractable' particles for eff computation. The options are: NHits, NHitsVXD, ILDLike-->
     <parameter name="reconstructableDefinition" type="string">ILDLike </parameter>
     <!--Detector element ID for the vertex Barrel-->
@@ -1721,6 +1727,9 @@
     <parameter name="FullSubsetCollections" type="StringVec"> EfficientMCParticles InefficientMCParticles </parameter>
     <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
     <parameter name="Verbosity" type="string">WARNING </parameter>
+    <parameter name="DropCollectionNames" type="StringVec">  </parameter>
+    <parameter name="DropCollectionTypes" type="StringVec">  </parameter>
+    <parameter name="KeepCollectionNames" type="StringVec">  </parameter>
   </processor>
 
   <processor name="Output_DST" type="LCIOOutputProcessor">
@@ -1732,19 +1741,19 @@
       MCPhysicsParticles
     </parameter>
     <parameter name="DropCollectionTypes" type="StringVec">
+      MCParticle
       LCRelation
       SimCalorimeterHit
       CalorimeterHit
       SimTrackerHit
       TrackerHit
       TrackerHitPlane
+      Track
+      ReconstructedParticle
       LCFloatVec
       Clusters
     </parameter>
     <parameter name="KeepCollectionNames" type="StringVec">
-      MCParticle
-      Track
-      ReconstructedParticle
       MCParticlesSkimmed
       MCPhysicsParticles
       RecoMCTruthLink
@@ -1783,6 +1792,7 @@
       RefinedVertices
       RefinedVertices_RP
     </parameter>
+    <parameter name="DropCollectionNames" type="StringVec">  </parameter>
     <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
     <parameter name="Verbosity" type="string">WARNING </parameter>
   </processor>
