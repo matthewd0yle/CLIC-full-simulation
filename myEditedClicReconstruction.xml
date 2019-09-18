@@ -146,7 +146,7 @@
     <!--Name of the DD4hep compact xml file to load-->
     <parameter name="EncodingStringParameter"> GlobalTrackerReadoutID </parameter>
     <parameter name="DD4hepXMLFile" type="string">
-      /cvmfs/clicdp.cern.ch/iLCSoft/builds/nightly/x86_64-slc6-gcc62-opt/lcgeo/HEAD/CLIC/compact/CLIC_o3_v13/CLIC_o3_v13.xml
+      CLIC_o3_vCustom/CLIC_o3_v14.xml
     </parameter>
   </processor>
 
