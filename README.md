@@ -7,10 +7,10 @@ This repo is an attempt to get the full CLIC simulation and reconstruction pipel
 The setup is largely based on the iLCSoft CLICPerformance repo, which in turn built using several other iLCSoft projects. The easiest way to set up the required software is via cvmfs. If properly setup, this can be done via the following command:
 
 ```
-source /cvmfs/clicdp.cern.ch/iLCSoft/builds/2019-04-17/x86_64-slc6-gcc62-opt/init_ilcsoft.sh
+source /cvmfs/clicdp.cern.ch/iLCSoft/builds/2019-09-04/x86_64-slc6-gcc62-opt/init_ilcsoft.sh
 ```
 
-Work was done on the 2019-04-17 build, but in principle any reasonably recent or future build should also work.
+Work was done on the 2019-09-04 build, but in principle any reasonably recent or future build should also work.
 
 
 
@@ -25,7 +25,7 @@ ddsim \
 --outputFile mySimOutputFile.slcio --numberOfEvents 100
 ```
 
-Where **steeringFile** corresponds to the file that produces the initial particles, **compactFile** describes the geometry and design of the detector and the other arguments are reasonably self explanatory. The compact files come in the format **CLIC\_o**_(option)_**\_v**_(version)_. The resultant .slcio file can then be reconstructed.
+Where **steeringFile** corresponds to the file that defines the parameters of the simulation, **compactFile** describes the geometry and design of the detector and the other arguments are reasonably self explanatory. The compact files come in the format **CLIC\_o**_(option)_**\_v**_(version)_. The resultant .slcio file can then be reconstructed.
 
 
 
@@ -63,12 +63,19 @@ For example:
 
 ```
 Marlin \
---InitDD4hep.DD4hepXMLFile="$lcgeo_DIR/CLIC/compact/CLIC_o3_v14/CLIC_o3_v14.xml"  \
---global.LCIOInputFiles="mySimOutputFile.slcio"\
+--InitDD4hep.DD4hepXMLFile="$lcgeo_DIR/CLIC/compact/CLIC_o3_v14/CLIC_o3_v14.xml" \
+--global.LCIOInputFiles="mySimOutputFile.slcio" \
 myEditedClicReconstruction.xml
 ```
 
-This process will produce a .root file, which can then be analysed.
+This process will produce a .root file, which can then be easily analysed. It also creates full *.slcio* files of both the simulated and reconstructed particles, allowing for the possibility of more in depth analysis.
+
+
+
+## Automation
+There are three scripts designed to automate the full simulation and automation process. **myFullRunScript.sh** does a full simulation reconstruction cycle on the custom CLIC model, simulating a number of single muon gun events. **fileBasedRunScript** is similar, but instead of a muon gun it takes a *.stdhep* input file to allow the simulation of more complicated events. **condorTopRunsScript** is a file based script specifically designed for use with HTCondor.
+
+Simulating the detection of a single top anti-top event can take several minutes. As a result, obtaning sufficient data by directly running the scripts can take an excessivly long time. One way around this issue is by running several parelell simulations on DICE and then combining the resultant file.
 
 ## Analysis
 #### **TO DO**
