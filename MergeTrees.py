@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
 import ROOT
 import os
 
@@ -16,7 +13,7 @@ def MergeROOTFiles(files):
         if type(guideFile) == ROOT.TDirectoryFile:
             mergedDirectory = ROOT.TDirectoryFile(guideFile.GetName(), guideFile.GetName())
         else:
-            mergedDirectory = ROOT.TFile("Merged.root", "RECREATE")
+            mergedDirectory = ROOT.TFile(outputFileName, "RECREATE")
         
         mergedDirectory.cd()
         keys = guideFile.GetListOfKeys()
@@ -68,12 +65,12 @@ def MergeROOTFiles(files):
 
         
 # Returns the number of files are available for merging
-def GetNumOfFiles():
+def GetNumOfFiles(runDirect):
     foundFile = True
     i = 0
     
     while foundFile:
-        filePath = f"TopRuns/run{i}/histograms.root"
+        filePath = f"{runDirect}/run{i}/histograms.root"
         if os.path.exists(filePath):
             i+=1
         else:
@@ -82,25 +79,23 @@ def GetNumOfFiles():
     return i
         
 
+
+runDirect = "TopRuns"
+outputFileName = "Merged.root"
     
-numberOfFiles = GetNumOfFiles()
+numberOfFiles = GetNumOfFiles(runDirect)
             
 files = []
 for i in range(numberOfFiles):
-    filePath = f"TopRuns/run{i}/histograms.root"
+    filePath = f"{runDirect}/run{i}/histograms.root"
     file = ROOT.TFile(filePath)
     files.append(file)
 
 mergedFile = MergeROOTFiles(files)
-#mergedFile.Write()
+mergedFile.Write()
 keys = mergedFile.GetListOfKeys()
 names = [key.GetName() for key in keys]
 mergedFile.Close()
 
 
-# In[ ]:
-
-
-# Automatically converts the notebook into a Python script
-get_ipython().system('jupyter nbconvert --to script MergeTrees.ipynb')
 
