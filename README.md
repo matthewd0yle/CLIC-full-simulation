@@ -84,9 +84,9 @@ TopRuns
  -run2
  ...
 ```
-The output of each run will be placed in the relevent run directory. In addition to the standard output, the files *output*, *error* and *log* will be produced. *output* containts that what would usually be printed to the console, *error* contains any error messeges and *log* gives information about the program's execution on dice.
+The output of each run will be placed in the relevent run directory. In addition to the standard output, the files *output*, *error* and *log* will be produced. *output* containts that what would usually be printed to the console, *error* contains any error messeges and *log* gives information about the program's execution on DICE.
 
-
+The files produced on DICE can then be merged with the **MergeTrees.ipynb** interactive Jupyter notebook or the **MergeTrees.py** python script, which is based on the former. They are written in Python 3 and require a version of ROOT compiled to work with such. They may work in Python 2, but this has not been tested.
 
 
 ## Analysis
