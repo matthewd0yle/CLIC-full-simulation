@@ -75,7 +75,19 @@ This process will produce a .root file, which can then be easily analysed. It al
 ## Automation
 There are three scripts designed to automate the full simulation and automation process. **myFullRunScript.sh** does a full simulation reconstruction cycle on the custom CLIC model, simulating a number of single muon gun events. **fileBasedRunScript** is similar, but instead of a muon gun it takes a *.stdhep* input file to allow the simulation of more complicated events. **condorTopRunsScript** is a file based script specifically designed for use with HTCondor.
 
-Simulating the detection of a single top anti-top event can take several minutes. As a result, obtaning sufficient data by directly running the scripts can take an excessivly long time. One way around this issue is by running several parelell simulations on DICE and then combining the resultant file.
+Simulating the detection of a single top anti-top event can take several minutes. As a result, obtaning sufficient data by directly running the scripts can take an excessivly long time. One way around this issue is by running several parelell simulations on DICE and then combining the resultant file. This can be done by submitting **topFullRun.job** with HTCondor, which will in turn execute **condorTopRunsScript** independatly on a number of machines, transfering the neccesary files. In order for the script to execute sucsessfuly, the directory TopRuns must exist and contain the following file structure:
+
+```
+TopRuns
+ -run0
+ -run1
+ -run2
+ ...
+```
+The output of each run will be placed in the relevent run directory. In addition to the standard output, the files *output*, *error* and *log* will be produced. *output* containts that what would usually be printed to the console, *error* contains any error messeges and *log* gives information about the program's execution on dice.
+
+
+
 
 ## Analysis
 #### **TO DO**
