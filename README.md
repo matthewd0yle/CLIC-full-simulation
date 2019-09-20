@@ -90,7 +90,7 @@ The files produced on DICE can then be merged with the **MergeTrees.ipynb** inte
 
 
 ## Analysis
-#### **TO DO**
+Analysis is done using the **Analysis.ipynb** Jupyter notebook, which as before is written in Python 3. This notebook produces a number of plots to enable the analyis of the simulation and reconstruciton process. By following the structure provided, it should be reasonably easy to produce futher plots as required.
 
 
 
