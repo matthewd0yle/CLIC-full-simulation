@@ -75,7 +75,7 @@ This process will produce a .root file, which can then be easily analysed. It al
 ## Automation
 There are three scripts designed to automate the full simulation and automation process. **myFullRunScript.sh** does a full simulation reconstruction cycle on the custom CLIC model, simulating a number of single muon gun events. **fileBasedRunScript** is similar, but instead of a muon gun it takes a *.stdhep* input file to allow the simulation of more complicated events. **condorTopRunsScript** is a file based script specifically designed for use with HTCondor.
 
-Simulating the detection of a single top anti-top event can take several minutes. As a result, obtaning sufficient data by directly running the scripts can take an excessivly long time. One way around this issue is by running several parelell simulations on DICE and then combining the resultant file. This can be done by submitting **topFullRun.job** with HTCondor, which will in turn execute **condorTopRunsScript** independatly on a number of machines, transfering the neccesary files. In order for the script to execute sucsessfuly, the directory TopRuns must exist and contain the following file structure:
+Simulating the detection of a single top anti-top event can take several minutes. As a result, obtaining sufficient data by directly running the scripts can take an excessively long time. One way around this issue is by running several parallel simulations on DICE and then combining the resultant file. This can be done by submitting **topFullRun.job** with HTCondor, which will in turn execute **condorTopRunsScript** independently on a number of machines, transferring the necessary files. In order for the script to execute successfully, the directory TopRuns must exist and contain the following file structure:
 
 ```
 TopRuns
@@ -84,13 +84,13 @@ TopRuns
  -run2
  ...
 ```
-The output of each run will be placed in the relevent run directory. In addition to the standard output, the files *output*, *error* and *log* will be produced. *output* containts that what would usually be printed to the console, *error* contains any error messeges and *log* gives information about the program's execution on DICE.
+The output of each run will be placed in the relevant run directory. In addition to the standard output, the files *output*, *error* and *log* will be produced. *output* contains that what would usually be printed to the console, *error* contains any error messages and *log* gives information about the program's execution on DICE.
 
 The files produced on DICE can then be merged with the **MergeTrees.ipynb** interactive Jupyter notebook or the **MergeTrees.py** python script, which is based on the former. They are written in Python 3 and require a version of ROOT compiled to work with such. They may work in Python 2, but this has not been tested.
 
 
 ## Analysis
-Analysis is done using the **Analysis.ipynb** Jupyter notebook, which as before is written in Python 3. This notebook produces a number of plots to enable the analyis of the simulation and reconstruciton process. By following the structure provided, it should be reasonably easy to produce futher plots as required.
+Analysis is done using the **Analysis.ipynb** Jupyter notebook, which as before is written in Python 3. This notebook produces a number of plots to enable the analysis of the simulation and reconstruction process. By following the structure provided, it should be reasonably easy to produce further plots as required.
 
 
 
